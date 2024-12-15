@@ -1,0 +1,17 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:sans-serif;
+}
+
+.navbar-container{
+  width: 100vw;
+  min-height:100vh;
+  background: #7c7f8b;
+  transition: 0.5s
+}
+
+.navbar-container.dark{
+  background: #222;
+}

@@ -1,0 +1,27 @@
+/* Add these to your existing CSS file */
+.player-card {
+    text-align: center;
+    margin: 10px;
+    width: 150px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.player-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.player-card h3 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.player-card p {
+    font-size: 14px;
+    color: #666;
+}

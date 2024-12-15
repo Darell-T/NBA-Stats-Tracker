@@ -1,0 +1,26 @@
+/* General Layout */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  background: var(--card-bg-color);
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dark Mode Styles */
+.dark .card {
+  background: #444;
+  color: #fff;
+}
+
+.light .card {
+  background: #fff;
+  color: #333;
+}

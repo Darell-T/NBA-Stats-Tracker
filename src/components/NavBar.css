@@ -1,0 +1,159 @@
+/* General Navbar Styles */
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--navbar-bg-color); /* Use theme-based background */
+    padding: 10px 5%;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo {
+    width: 120px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05); /* Slight logo zoom on hover */
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3)); /* Subtle shadow on hover */
+}
+
+/* Navigation Menu */
+ul {
+    flex: 1;
+    list-style: none;
+    text-align: center;
+}
+
+ul li {
+    display: inline-block;
+    margin: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+ul li:hover {
+    color: var(--highlight-color); /* Dynamic hover color */
+    transform: translateY(-3px); /* Slight hover lift */
+}
+
+/* Search Bar Styles */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--search-bar-bg-color); /* Use theme-based background */
+    padding: 8px 15px;
+    border-radius: 50px;
+    transition: background-color 0.3s, box-shadow 0.3s ease;
+}
+
+.search-bar input {
+    padding: 6px;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: var(--input-text-color);
+    font-size: 16px;
+    max-width: 200px;
+    transition: width 0.3s ease;
+}
+
+.search-bar input::placeholder {
+    color: var(--input-placeholder-color);
+}
+
+.search-bar:hover {
+    background-color: var(--search-bar-hover-bg); /* Hover effect for search bar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Icon Hover */
+.search-bar img {
+    width: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.search-bar img:hover {
+    transform: scale(1.1);
+}
+
+/* Toggle Icon (Theme Switcher) */
+.toggle-icon {
+    width: 40px;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon:hover {
+    transform: rotate(360deg); /* Smooth icon rotation on hover */
+}
+
+/* Dark Mode Styles */
+.dark .navbar {
+    background: #222;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dark .search-bar {
+    background: #333;
+}
+
+.dark .search-bar input {
+    color: #fff;
+}
+
+.dark .search-bar::placeholder {
+    color: #bbb;
+}
+
+/* Light Mode Styles */
+.light .navbar {
+    background: #fff;
+    color: #333;
+}
+
+.light .search-bar {
+    background: #f1f1f1;
+}
+
+.light .search-bar input {
+    color: #333;
+}
+
+.light .search-bar::placeholder {
+    color: #777;
+}
+
+/* Root Variables for Light/Dark Themes */
+:root {
+    --navbar-bg-color: #fff;
+    --search-bar-bg-color: #242424;
+    --input-text-color: #fff;
+    --input-placeholder-color: #fff;
+    --highlight-color: #007bff;
+    --search-bar-hover-bg: #3a3a3a;
+}
+
+.dark {
+    --navbar-bg-color: #222;
+    --search-bar-bg-color: #333;
+    --input-text-color: #fff;
+    --input-placeholder-color: #bbb;
+    --highlight-color: #ff6600;
+    --search-bar-hover-bg: #444;
+}
+
+.light {
+    --navbar-bg-color: #fff;
+    --search-bar-bg-color: #f1f1f1;
+    --input-text-color: #333;
+    --input-placeholder-color: #777;
+    --highlight-color: #007bff;
+    --search-bar-hover-bg: #ddd;
+}
