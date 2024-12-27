@@ -1,13 +1,17 @@
-// playerStatsService.js
 import axios from 'axios';
-
-export const getBoxScore = async (gameId) => {
-    try {
-        const response = await axios.get(`https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${gameId}.json`);
-        console.log('Box score response:', response.data);  // Log the response to see if data is being fetched
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching box score:', error);
-        throw error;
-    }
+// This API contains the metadata for players and headshots
+const options = {
+  method: 'GET',
+  url: 'https://basketball-head.p.rapidapi.com/players/jamesle01',
+  headers: {
+    'x-rapidapi-key': '8cd48c19bamshc15038d6562e299p149a6bjsn98180d5c0330',
+    'x-rapidapi-host': 'basketball-head.p.rapidapi.com'
+  }
 };
+
+try {
+	const response = await axios.request(options);
+	console.log(response.data);
+} catch (error) {
+	console.error(error);
+}

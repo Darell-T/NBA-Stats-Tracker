@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getESPNScoreboard } from '../services/espnService';
-import { getBoxScore } from '../services/playerStatsService'; // The service for fetching the box score
-import './StatStuffer.css';
+
+
 
 const NBAScores = () => {
     const [games, setGames] = useState([]);
