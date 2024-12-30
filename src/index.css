@@ -8,10 +8,35 @@
 .navbar-container{
   width: 100vw;
   min-height:100vh;
-  background: #7c7f8b;
+  background: #ffff;
   transition: 0.5s
 }
 
 .navbar-container.dark{
   background: #222;
+}
+
+.sign-in-container{
+  background: #222;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  z-index: 10;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

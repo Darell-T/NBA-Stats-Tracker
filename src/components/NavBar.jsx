@@ -7,13 +7,12 @@ import toggle_light from '/src/assets/night.png';
 import toggle_dark from '/src/assets/day.png';
 import logo_gif from '/src/assets/logo-gif.gif';
 
-const NavBar = ({ theme, setTheme, onSignInClick }) => {
+const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick}) => {
     const [playerName, setPlayerName] = useState("");
 
     const toggle_mode = () => {
         theme === 'light' ? setTheme('dark') : setTheme('light');
     };
-
 
     const handleInputChange = (e) => {
         setPlayerName(e.target.value);
@@ -27,16 +26,18 @@ const NavBar = ({ theme, setTheme, onSignInClick }) => {
         <div className="navbar">
             <img src={logo_gif} className="logo" alt="Logo" />
             <ul>
-                <li><FaHome /> Home</li>
+                <li 
+                 onClick={onHomeClick}>
+                    <FaHome /> Home</li>
                 <li><FaStar /> Favorites</li>
                 <li 
                     style={{ cursor: 'pointer' }}
-                    onClick = {onSignInClick}
+                    onClick={onSignInClick} 
+                    onClose ={onClose}
                 >
                     <FaSignInAlt /> Sign-in
                 </li>
             </ul>
-
 
             <div className="search-bar">
                 <input 

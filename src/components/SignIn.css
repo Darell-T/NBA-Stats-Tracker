@@ -1,6 +1,6 @@
 .signin-container{
     width: 420px;
-    background: slateblue;
+    background: transparent;
     color: #fff;
     border-radius: 10px;
     padding: 30px 40px;
@@ -16,7 +16,7 @@
 .signin-container .input-box{
     position: relative;
     width: 100%;
-    background: salmon;
+    background: #ff6600;
     margin: 30px 0;
 }
 

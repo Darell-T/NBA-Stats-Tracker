@@ -1,5 +1,11 @@
-h1{
-    color: orange;
+.home-page.light .title-light{
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.home-page.dark .title-dark{
+    color: white;
     text-align: center;
     margin-top: 20px;
 }
