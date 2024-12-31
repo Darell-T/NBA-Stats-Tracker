@@ -1,10 +1,12 @@
-.home-page.light .title-light{
+/* Light Theme Styles */
+.home-page.light .title-light {
     color: black;
     text-align: center;
     margin-top: 20px;
 }
 
-.home-page.dark .title-dark{
+/* Dark Theme Styles */
+.home-page.dark .title-dark {
     color: white;
     text-align: center;
     margin-top: 20px;

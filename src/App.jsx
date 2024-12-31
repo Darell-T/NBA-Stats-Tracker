@@ -34,7 +34,9 @@ const App = () => {
           onSignInClick={handleSignInClick}
           onHomeClick={() => { setShowScores(true); setShowSignIn(false); }}
         />
-        {showScores && !showSignIn && <HomePage theme={theme} />}
+        
+        {showScores && !showSignIn && <HomePage theme={theme} 
+        setTheme={theme}/>}
       </div>
 
       {showSignIn && (

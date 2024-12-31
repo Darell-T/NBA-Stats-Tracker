@@ -3,11 +3,16 @@ import { getESPNScoreboard } from '../services/espnService';
 
 
 
-const NBAScores = () => {
+const NBAScores = ({theme, setTheme}) => {
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
     const [boxScore, setBoxScore] = useState(null); // State for the selected game's box score
     const [selectedGame, setSelectedGame] = useState(null); // To store the selected game
+
+    const toggle_mode = () => {
+        theme === 'light' ? setTheme('dark') : setTheme('light');
+    };
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -57,7 +62,7 @@ const NBAScores = () => {
 
     return (
         <div>
-            <ul>
+            <ul className={`scores ${theme}`}>
                 {games.map((game) => (
                     <li
                         key={game.id}

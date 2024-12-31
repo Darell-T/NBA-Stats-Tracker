@@ -25,3 +25,8 @@
     font-size: 14px;
     color: #666;
 }
+
+.scores.dark li{
+    color: white;
+    
+}
