@@ -3,6 +3,7 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 
+
 // Initialize express app
 const app = express();
 const PORT = 5000;
@@ -14,12 +15,13 @@ app.use(express.json());
 app.get('/api/nba-scores', async (req, res) => {
     try {
         const response = await axios.get('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard');
-        res.json(response.data);
+         res.json(response.data);
     } catch (error) {
         console.error('Error fetching NBA Scores:', error);
-        res.status(500).json({ message: 'Failed to fetch current scores.' });
+        res.status(500).json({ message: 'Failed to fetch current scores' });
     }
 });
+
 
 // #2. Fetch player by name (to get player ID)
 app.post('/api/player-stats', async (req, res) => {
@@ -34,20 +36,29 @@ app.post('/api/player-stats', async (req, res) => {
             'Content-Type': 'application/json',
         },
         data: {
-            firstname,
-            lastname,
-            pageSize: 1,
+            firstname: firstname.toLowerCase(),
+            lastname: lastname.toLowerCase(),
+            pageSize: 100,
         },
     };
 
     try {
         const response = await axios.request(options);
-        res.json(response.data);
+        const players = response.data?.body || []; // Extract 'body' from the API's JSON response
+        
+        if (players.length === 0) {
+            // If no players are found, return an appropriate message
+            return res.status(404).json({ message: 'Player not found.' });
+        }
+        
+        const player = players[0]; // Assume the first result is the player you are looking for
+        res.json(player); // Send the player data back to the client
     } catch (error) {
         console.error('Error searching for player:', error);
         res.status(500).json({ message: 'Player search failed.' });
     }
 });
+
 
 // #3. Fetch player stats by ID
 app.get('/api/player-stats/:playerId', async (req, res) => {
@@ -81,5 +92,5 @@ app.get('/api/player-stats/:playerId', async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server is running at http://localhost:${PORT}`);
 });

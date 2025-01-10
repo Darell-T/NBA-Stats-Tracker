@@ -6,10 +6,13 @@ import search_icon_dark from '/src/assets/search-b.png';
 import toggle_light from '/src/assets/night.png';
 import toggle_dark from '/src/assets/day.png';
 import logo_gif from '/src/assets/logo-gif.gif';
+import axios from 'axios';
 
-const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick}) => {
+const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick, onSearch}) => {
     const [playerName, setPlayerName] = useState("");
-
+    const [firstname, lastname] = playerName.trim().split(/\s+/);
+    const [playerData, setPlayerData] = useState(null);
+    
     const toggle_mode = () => {
         theme === 'light' ? setTheme('dark') : setTheme('light');
     };
@@ -19,8 +22,36 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick}) => {
     };
 
     const handleSearch = async () => {
-        console.log(`Searching for player: ${playerName}`);
+        try {
+    
+            if (!firstname || !lastname) {
+                console.error('Please enter a full name (first and last).');
+                return;
+            }
+    
+            const response = await axios.post('http://localhost:5000/api/player-stats', {
+                firstname,
+                lastname,
+            });
+    
+            const playerId = response.data?.playerId; // Access playerId from the response
+            if (!playerId) {
+                console.error('Player not found');
+                return;
+            }
+    
+            // Now fetch actual stats using playerId
+            const stats = await axios.get(`http://localhost:5000/api/player-stats/${playerId}`);
+    
+            console.log('Fetched Player Stats:', stats.data);
+            setPlayerData(stats.data); // Update state with fetched stats
+        } catch (error) {
+            console.error('Error fetching player:', error);
+            onSearch(null);
+        }
     };
+    
+    
 
     return (
         <div className="navbar">

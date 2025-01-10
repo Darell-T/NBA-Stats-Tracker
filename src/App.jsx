@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import SignIn from './components/SignIn';
+//import PlayerCard from './components/PlayerCard'; // Import PlayerCard component
 
 const App = () => {
   const current_theme = localStorage.getItem('current_theme');
@@ -15,14 +16,28 @@ const App = () => {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showScores, setShowScores] = useState(true);
 
+  const [playerData, setPlayerData] = useState(null); // Store player search results
+
+  const handleSearch = (data) => {
+    setPlayerData(data); // Update with player data fetched from API
+    setShowScores(false); // Hide HomePage if search results are shown
+    setShowSignIn(false); // Ensure Sign-In form is hidden
+  };
+
   const handleSignInClick = () => {
     setShowSignIn(true);
-    setShowScores(false);  // Hide scores when signing in
+    setShowScores(false); // Hide scores when signing in
   };
 
   const handleCloseSignInForm = () => {
     setShowSignIn(false);
     setShowScores(true); // Show scores again when signing in is closed
+  };
+
+  const handleHomeClick = () => {
+    setShowScores(true); // Show scores
+    setShowSignIn(false); // Hide Sign-In
+    setPlayerData(null); // Clear search results
   };
 
   return (
@@ -32,16 +47,31 @@ const App = () => {
           theme={theme} 
           setTheme={setTheme} 
           onSignInClick={handleSignInClick}
-          onHomeClick={() => { setShowScores(true); setShowSignIn(false); }}
+          onHomeClick={handleHomeClick}
+          onSearch={handleSearch} // Pass search handler to NavBar
         />
         
-        {showScores && !showSignIn && <HomePage theme={theme} 
-        setTheme={theme}/>}
+        {showScores && !playerData && (
+          <HomePage 
+            theme={theme} 
+            setTheme={setTheme} 
+          />
+        )}
       </div>
 
       {showSignIn && (
         <div className="sign-in-container">
           <SignIn onClose={handleCloseSignInForm} />
+        </div>
+      )}
+
+      {/* Render PlayerCard if playerData is available */}
+      {playerData && (
+        <div className="player-card-container">
+          <PlayerCard 
+            player={playerData} 
+            theme={theme} 
+          />
         </div>
       )}
     </div>
