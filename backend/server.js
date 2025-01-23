@@ -47,11 +47,11 @@ app.post('/api/player-stats', async (req, res) => {
         const players = response.data?.body || []; // Extract 'body' from the API's JSON response
         
         if (players.length === 0) {
-            // If no players are found, return an appropriate message
+            // If no players are found, return a 404 error
             return res.status(404).json({ message: 'Player not found.' });
         }
         
-        const player = players[0]; // Assume the first result is the player you are looking for
+        const player = players[0]; // Assume the first player is the one we want
         res.json(player); // Send the player data back to the client
     } catch (error) {
         console.error('Error searching for player:', error);
