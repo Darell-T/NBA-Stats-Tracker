@@ -1,27 +1,131 @@
-import React from 'react';
+import React from "react";
+import "./PlayerCard.css";
 
-const PlayerCard = ({ player }) => {
+const PlayerCard = ({ player, theme, onClose }) => {
   if (!player) return null;
 
-  console.log('Player data in PlayerCard:', player); // Log the player data
-  const playerStats = player.body[player.body.length - 1]; // Get the last element of the array
-//HEADSHOT WORKS, WORKING ON GETTING DATA TO DISPLAY
+  console.log("Player data in PlayerCard:", player);
+  const playerStats = player.body[player.body.length - 2];
 
-console.log('Player stats:', playerStats);
   return (
-    <div>
-      <h2>{playerStats.name}</h2>
-      <img src={player.headshotUrl} alt={player.name} width="200" />
-      <p>Team: {playerStats.team}</p>
-      <p>Position: {playerStats.position}</p>
-      <p>Points per game: {playerStats.pointsPerGame}</p>
-      <p>Assists per game: {playerStats.assistsPerGame}</p>
-      <p>Rebounds per game: {playerStats.totalReboundsPerGame}</p>
-      <p>Steals per game: {playerStats.stealsPerGame}</p>
-      <p>Blocks per game: {playerStats.blocksPerGame}</p>
-      <p>Field Goal Percentage: {playerStats.fieldGoalPercentage}</p>
-      <p>Three Point Percentage: {playerStats.threePointFieldGoalPercentage}</p>
-      <p>Free Throw Percentage: {playerStats.freeThrowPercentage}</p>
+    <div className="player-card-overlay">
+      <div className="player-card-modal">
+        <button
+          className="close-button"
+          onClick={onClose}
+          aria-label="Close player card"
+        >
+          ✕
+        </button>
+
+        <div className={`player-card ${theme}`}>
+          {/* Header Section */}
+          <div className={`player-header ${theme}`}>
+            <h2 className="player-title">
+              {`${player.firstName ?? ""} ${player.lastName ?? ""}`.trim() ||
+                "Unknown Player"}
+            </h2>
+
+            {player.headshotUrl ? (
+              <img
+                src={player.headshotUrl}
+                alt={playerStats.name || "Player"}
+                className={`player-image ${theme}`}
+                onError={(e) => {
+                  console.log("Image failed to load:", player.headshotUrl);
+                  e.target.style.display = "none";
+                }}
+              />
+            ) : (
+              <div className={`player-image-placeholder ${theme}`}>
+                No Photo Available
+              </div>
+            )}
+
+            <div className="team-position-container">
+              <div className={`stat-item ${theme}`}>
+                <div className={`stat-label ${theme}`}>Team</div>
+                <div className={`stat-value ${theme}`}>
+                  {playerStats.team || "N/A"}
+                </div>
+              </div>
+              <div className={`stat-item ${theme}`}>
+                <div className={`stat-label ${theme}`}>Position</div>
+                <div className={`stat-value ${theme}`}>
+                  {playerStats.position || "N/A"}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="stats-grid">
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${them}`}>Points per Game</div>
+              <div className={`stat-value ${them}`}>
+                {playerStats.pointsPerGame || "N A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Assists per Game</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.assistsPerGame || "N/A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Rebounds per Game</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.totalReboundsPerGame || "N/A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Steals per Game</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.stealsPerGame || "N/A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Blocks per Game</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.blocksPerGame || "N/A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Field Goal %</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.fieldGoalPercentage
+                  ? `${(playerStats.fieldGoalPercentage * 100).toFixed(1)}%`
+                  : "N/A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Three Point %</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.threePointFieldGoalPercentage
+                  ? `${(
+                      playerStats.threePointFieldGoalPercentage * 100
+                    ).toFixed(1)}%`
+                  : "N/A"}
+              </div>
+            </div>
+
+            <div className={`stat-item ${theme}`}>
+              <div className={`stat-label ${theme}`}>Free Throw %</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.freeThrowPercentage
+                  ? `${(playerStats.freeThrowPercentage * 100).toFixed(1)}%`
+                  : "N/A"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

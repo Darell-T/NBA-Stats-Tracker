@@ -1,10 +1,164 @@
 .scores {
-    list-style: none;
-    padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 20px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
-.scores.dark .game-text {
-    color: white;
+
+.scores.light {
+  --bg-color: #f9f9f9;
+  --text-color: #222;
 }
-.scores.light .game-text {
-    color: black;
+
+.scores.dark {
+  --bg-color: #121212;
+  --text-color: #eee;
+}
+
+.game-card {
+  background: var(--card-bg, white);
+  border-radius: 12px;
+  padding: 12px;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.game-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+.game-card:hover::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 123, 255, 0.1),
+    rgba(255, 102, 0, 0.1)
+  );
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.game-card:hover::before {
+  opacity: 1;
+}
+.scores.dark .game-card {
+  --card-bg: #1e1e1e;
+}
+.scores.dark .game-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.game-status.final {
+  color: #888;
+}
+
+.game-status.live {
+  color: red;
+  font-weight: bold;
+}
+
+.game-status.upcoming {
+  color: #007bff;
+}
+
+.teams-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.team {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.team-name {
+  font-weight: 500;
+}
+
+.team-score {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.team.winner .team-score {
+  color: green;
+}
+
+.game-footer {
+  font-size: 12px;
+  margin-top: 8px;
+  color: #666;
+}
+
+.broadcast {
+  margin-top: 4px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #ccc;
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.no-games {
+  text-align: center;
+  padding: 20px;
+}
+
+.no-games-icon {
+  font-size: 40px;
+}
+
+.retry-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
