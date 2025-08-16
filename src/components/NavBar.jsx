@@ -48,7 +48,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
     try {
       console.log("Searching for:", { firstName, lastName });
 
-      // Use the updated API endpoint with correct parameter names
       const response = await axios.post(
         "http://localhost:5000/api/player-full-data",
         {

@@ -43,14 +43,14 @@ const RAPIDAPI_HEADERS = {
 // Helper function to make API requests with better error handling
 async function makeRapidAPIRequest(url, options = {}) {
   try {
+    // Use provided headers if they exist, otherwise use default RAPIDAPI_HEADERS
+    const headers = options.headers || RAPIDAPI_HEADERS;
+
     const response = await axios({
       url,
-      timeout: 10000, // 10 second timeout
+      timeout: 10000,
       ...options,
-      headers: {
-        ...RAPIDAPI_HEADERS,
-        ...options.headers,
-      },
+      headers: headers, // Use the determined headers
     });
     return response.data;
   } catch (error) {
@@ -86,6 +86,38 @@ app.get("/api/nba-scores", async (req, res) => {
     console.error("Error fetching NBA Scores:", error.message);
     res.status(500).json({
       message: "Failed to fetch current scores",
+      error: error.message,
+    });
+  }
+});
+
+// Combined ESPN API standings route (Eastern and Western conferences)
+app.get("/api/standings", async (req, res) => {
+  try {
+    console.log("Fetching NBA standings from ESPN (both conferences)...");
+
+    // Fetch both conferences simultaneously
+    const [easternResponse, westernResponse] = await Promise.all([
+      axios.get(
+        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?group=5", // eastern
+        { timeout: 10000 }
+      ),
+      axios.get(
+        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?group=6", // western
+        { timeout: 10000 }
+      ),
+    ]);
+
+    console.log("ESPN standings response received for both conferences");
+
+    res.json({
+      eastern: easternResponse.data,
+      western: westernResponse.data,
+    });
+  } catch (error) {
+    console.error("Error fetching NBA standings from ESPN:", error.message);
+    res.status(500).json({
+      message: "Failed to fetch NBA standings",
       error: error.message,
     });
   }
@@ -338,6 +370,7 @@ app.use("*", (req, res) => {
     message: "Route not found",
     availableRoutes: [
       "GET /api/nba-scores",
+      "GET /api/standings",
       "POST /api/player-search",
       "GET /api/player-stats/:playerId",
       "POST /api/player-full-data",
@@ -352,6 +385,7 @@ app.listen(PORT, () => {
   console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
   console.log(`Available endpoints:`);
   console.log(`  GET  /api/nba-scores`);
+  console.log(`  GET  /api/standings`);
   console.log(`  POST /api/player-search`);
   console.log(`  GET  /api/player-stats/:playerId`);
   console.log(`  POST /api/player-full-data`);
