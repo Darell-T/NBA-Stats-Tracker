@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "./StandingsTable.css"; // Assuming you have a CSS file for styling
 const StandingsTable = () => {
   const [standings, setStandings] = useState({
     eastern: [],
@@ -19,6 +19,11 @@ const StandingsTable = () => {
         }
 
         const data = await response.json();
+        //data are you there????
+        //console.log("Fetched standings data:", data);
+        //console.log("Eastern Conference:", data.eastern?.length || 0);
+        //console.log("Western Conference:", data.western?.length || 0);
+
         setStandings({
           eastern: data.eastern,
           western: data.western,
@@ -39,11 +44,41 @@ const StandingsTable = () => {
 
   // check data
   console.log("Standings data:", standings);
+  const sortedEastern = [...standings.eastern].sort((a, b) => b.wins - a.wins);
+  const sortedWestern = [...standings.western].sort((a, b) => b.wins - a.wins);
+  console.log("Sorted Eastern Conference:", sortedEastern);
+  console.log("Sorted Western Conference:", sortedWestern);
 
   return (
     <div>
-      <h2>NBA Standings</h2>
-      <p></p>
+      <h2 className="title">NBA Standings</h2>
+      <div className="standings-container">
+        <h3 className="standings-title">Eastern Conference</h3>
+        <table className="standings-table">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Wins</th>
+              <th>Losses</th>
+              <th>Win %</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedEastern.map((team, index) => (
+              <tr key={index}>
+                <td>{index + 1} </td> {/* Display team rank */}
+                <td>
+                  <img src={team.logo} alt={team.name} width="30" height="30" />
+                </td>
+                <td>{team.name}</td>
+                <td>{team.wins}</td>
+                <td>{team.losses}</td>
+                <td>{(team.wins / (team.wins + team.losses)).toFixed(3)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

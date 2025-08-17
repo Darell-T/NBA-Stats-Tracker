@@ -91,28 +91,66 @@ app.get("/api/nba-scores", async (req, res) => {
   }
 });
 
+//function to format team stats
+const formatTeams = (entries) => {
+  return entries.map((entry) => {
+    const team = entry.team;
+
+    const stats = {};
+    entry.stats.forEach((s) => {
+      stats[s.name] = s.value;
+    });
+
+    return {
+      id: team.id,
+      name: team.displayName,
+      abbreviation: team.abbreviation,
+      logo: team.logos ? team.logos[0].href : null,
+      wins: stats.wins || 0,
+      losses: stats.losses || 0,
+      winPercentage: stats.winPercentage || 0,
+      streak: stats.streak || "0",
+      gamesBack: stats.gamesBack || "0",
+    };
+  });
+};
+
 // Combined ESPN API standings route (Eastern and Western conferences)
 app.get("/api/standings", async (req, res) => {
   try {
     console.log("Fetching NBA standings from ESPN (both conferences)...");
 
-    // Fetch both conferences simultaneously
     const [easternResponse, westernResponse] = await Promise.all([
       axios.get(
-        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?group=5", // eastern
+        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?group=5",
         { timeout: 10000 }
       ),
       axios.get(
-        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?group=6", // western
+        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?group=6",
         { timeout: 10000 }
       ),
     ]);
 
+    // Flatten all divisions within Eastern Conference
+    const easternEntries = [];
+    easternResponse.data.children.forEach((division) => {
+      easternEntries.push(...division.standings.entries);
+    });
+
+    // Flatten all divisions within Western Conference
+    const westernEntries = [];
+    westernResponse.data.children.forEach((division) => {
+      westernEntries.push(...division.standings.entries);
+    });
+
     console.log("ESPN standings response received for both conferences");
+    console.log(
+      `Eastern teams: ${easternEntries.length}, Western teams: ${westernEntries.length}`
+    );
 
     res.json({
-      eastern: easternResponse.data,
-      western: westernResponse.data,
+      eastern: formatTeams(easternEntries),
+      western: formatTeams(westernEntries),
     });
   } catch (error) {
     console.error("Error fetching NBA standings from ESPN:", error.message);
@@ -122,7 +160,6 @@ app.get("/api/standings", async (req, res) => {
     });
   }
 });
-
 // #2. Search for player by name
 app.post("/api/player-search", async (req, res) => {
   try {
