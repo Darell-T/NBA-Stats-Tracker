@@ -1,0 +1,227 @@
+/* Main Title */
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333; /* Default light mode */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Standings Container (side by side) */
+.standings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Standings Card */
+.standings-card {
+  background: #fff; /* Default light mode */
+  border-radius: 12px;
+  padding: 0;
+  width: 350px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Smooth transition for theme and hover */
+  overflow: hidden;
+}
+
+.standings-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Conference Title */
+.standings-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  padding: 15px;
+  background: #1f2937;
+  color: white;
+}
+
+/* Table */
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+}
+
+.standings-table th,
+.standings-table td {
+  padding: 8px 6px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0; /* Light mode border */
+  color: #333; /* Light mode text */
+  transition: all 0.3s ease; /* Smooth transitions */
+}
+
+.standings-table th {
+  font-weight: bold;
+  font-size: 12px;
+  background: #f8f9fa; /* Light mode header */
+  color: #333;
+  transition: all 0.3s ease; /* Smooth transitions */
+}
+
+/* Column widths */
+.standings-table th:nth-child(1),
+.standings-table td:nth-child(1) {
+  width: 30px;
+  text-align: center;
+}
+
+.standings-table th:nth-child(2),
+.standings-table td:nth-child(2) {
+  width: auto;
+}
+
+.standings-table th:nth-child(3),
+.standings-table td:nth-child(3),
+.standings-table th:nth-child(4),
+.standings-table td:nth-child(4),
+.standings-table th:nth-child(5),
+.standings-table td:nth-child(5) {
+  width: 50px;
+  text-align: center;
+}
+
+/* Team Cell with Logo */
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease; /* Smooth color transitions */
+}
+
+.team-logo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Row styling with consistent hover */
+.standings-table tbody tr {
+  transition: background-color 0.3s ease; /* Smooth hover transitions */
+}
+
+.standings-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.standings-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* DARK MODE STYLES */
+.dark .title {
+  color: #ffffff;
+}
+
+.dark .standings-card {
+  background: #2d2d2d;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .standings-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+.dark .standings-table th,
+.dark .standings-table td {
+  border-bottom: 1px solid #404040;
+  color: #ffffff;
+}
+
+.dark .standings-table th {
+  background: #3a3a3a;
+  color: #ffffff;
+}
+
+.dark .team-cell {
+  color: #ffffff;
+}
+
+.dark .standings-table tbody tr {
+  background-color: transparent; /* Reset background for consistent hover */
+}
+
+.dark .standings-table tbody tr:hover {
+  background-color: #404040 !important; /* Force hover color */
+}
+
+.dark .standings-table tbody tr:nth-child(even) {
+  background-color: #353535;
+}
+
+.dark .standings-table tbody tr:nth-child(even):hover {
+  background-color: #404040 !important; /* Consistent hover for even rows */
+}
+
+/* LIGHT MODE STYLES */
+.light .title {
+  color: #333;
+}
+
+.light .standings-card {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.light .standings-table th,
+.light .standings-table td {
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+}
+
+.light .standings-table th {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.light .team-cell {
+  color: #333;
+}
+
+.light .standings-table tbody tr {
+  background-color: transparent; /* Reset background for consistent hover */
+}
+
+.light .standings-table tbody tr:hover {
+  background-color: #f8f9fa !important; /* Force hover color */
+}
+
+.light .standings-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.light .standings-table tbody tr:nth-child(even):hover {
+  background-color: #f8f9fa !important; /* Consistent hover for even rows */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .standings {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .standings-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .standings-table {
+    font-size: 12px;
+  }
+
+  .team-logo {
+    width: 18px;
+    height: 18px;
+  }
+}

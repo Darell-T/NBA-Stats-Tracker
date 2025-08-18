@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { FaHome, FaStar, FaSignInAlt } from "react-icons/fa";
+import { FcHome, FcLike, FcSearch, FcLock, FcIdea } from "react-icons/fc"; // ✅ add FcIdea
 import "./NavBar.css";
-import search_icon_light from "/src/assets/search-w.png";
-import search_icon_dark from "/src/assets/search-b.png";
-import toggle_light from "/src/assets/night.png";
-import toggle_dark from "/src/assets/day.png";
 import logo_gif from "/src/assets/logo-gif.gif";
 import axios from "axios";
 import PlayerCard from "./PlayerCard";
@@ -46,8 +42,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
     setLoading(true);
 
     try {
-      console.log("Searching for:", { firstName, lastName });
-
       const response = await axios.post(
         "http://localhost:5000/api/player-full-data",
         {
@@ -56,9 +50,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
         }
       );
 
-      console.log("API response:", response.data);
-
-      // Handle the new response structure
       if (
         response.data?.success &&
         response.data?.player &&
@@ -67,7 +58,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
         const { player, stats } = response.data;
 
         const combinedData = {
-          // Player info
           playerId: player.playerId,
           firstName: player.firstName,
           lastName: player.lastName,
@@ -76,18 +66,14 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
           position: player.position,
           headshotUrl: player.headshotUrl,
           jerseyNumber: player.jerseyNumber,
-          // Stats data
           ...stats,
         };
 
-        console.log("Combined player data:", combinedData);
         setPlayerData(combinedData);
       } else {
         setError("Player data not found or invalid response format.");
       }
     } catch (error) {
-      console.error("Error fetching player:", error);
-
       let errorMessage = "An error occurred while fetching player data.";
 
       if (error.response) {
@@ -134,7 +120,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
     }
   };
 
-  // Function to close the player card
   const closePlayerCard = () => {
     setPlayerData(null);
     setPlayerName("");
@@ -147,17 +132,19 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
         <img src={logo_gif} className="logo" alt="Logo" />
         <ul>
           <li onClick={onHomeClick}>
-            <FaHome /> Home
+            <FcHome /> Home
           </li>
           <li>
-            <FaStar /> Favorites
+            <FcLike /> Favorites
           </li>
           <li
             style={{ cursor: "pointer" }}
-            onClick={onSignInClick}
-            onClose={onClose}
+            onClick={() => {
+              onSignInClick();
+              if (onClose) onClose();
+            }}
           >
-            <FaSignInAlt /> Sign-in
+            <FcLock /> Sign-in
           </li>
         </ul>
 
@@ -165,7 +152,7 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
           <input
             type="text"
             onKeyPress={handleKeyPress}
-            placeholder="Enter NBA Player Name (e.g., LeBron James)"
+            placeholder="Enter Player Name"
             value={playerName}
             onChange={handleInputChange}
             disabled={loading}
@@ -174,26 +161,32 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
               cursor: loading ? "not-allowed" : "text",
             }}
           />
-          <img
+          <FcSearch
             onClick={handleSearch}
-            src={theme === "light" ? search_icon_light : search_icon_dark}
-            alt="Search"
             className="search-icon"
             style={{
-              opacity: loading ? 0.6 : 1,
+              fontSize: "24px",
+              marginLeft: "8px",
               cursor: loading ? "not-allowed" : "pointer",
+              opacity: loading ? 0.6 : 1,
             }}
           />
         </div>
 
-        <img
+        <FcIdea
           onClick={toggle_mode}
-          src={theme === "light" ? toggle_light : toggle_dark}
-          alt="Toggle Theme"
           className="toggle-icon"
+          style={{
+            fontSize: "28px",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            filter:
+              theme === "light"
+                ? "drop-shadow(0 0 6px #FFD700)" // glowing in light mode
+                : "grayscale(100%) brightness(60%)", // dimmed in dark mode
+          }}
+          title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         />
-
-        {/* Loading indicator in navbar */}
         {loading && (
           <div
             className="loading-indicator"
@@ -214,7 +207,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
           </div>
         )}
 
-        {/* Error message in navbar */}
         {error && !playerData && (
           <div
             className="error-message"
@@ -237,7 +229,6 @@ const NavBar = ({ theme, setTheme, onSignInClick, onClose, onHomeClick }) => {
         )}
       </div>
 
-      {/* Centered Player Card Overlay */}
       {playerData && !error && (
         <div className="player-card-overlay">
           <div className="player-card-modal">
