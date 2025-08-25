@@ -92,6 +92,17 @@ const NBAScores = ({ theme, setTheme }) => {
     }
   };
 
+  // NEW: format the date
+  const formatGameDate = (event) => {
+    try {
+      const date = new Date(event.date);
+      const options = { weekday: "short", month: "short", day: "numeric" };
+      return date.toLocaleDateString("en-US", options);
+    } catch {
+      return "TBD";
+    }
+  };
+
   const getWinner = (homeScore, awayScore, gameStatus) => {
     if (gameStatus !== "final") return null;
     const home = parseInt(homeScore) || 0;
@@ -153,6 +164,7 @@ const NBAScores = ({ theme, setTheme }) => {
                 isWinner: winner === "away",
               },
               status: gameStatusInfo,
+              date: formatGameDate(event), // NEW
               time: formatGameTime(event),
               venue: competition?.venue?.fullName || "TBD",
               broadcasts:
@@ -222,7 +234,10 @@ const NBAScores = ({ theme, setTheme }) => {
             <span className={`game-status ${game.status.class}`}>
               {game.status.display}
             </span>
-            <span className="game-time">{game.time}</span>
+            <div className="game-datetime">
+              <div className="game-date">{game.date}</div>
+              <div className="game-time">{game.time}</div>
+            </div>
           </div>
 
           <div className="teams-container">

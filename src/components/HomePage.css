@@ -1,13 +1,18 @@
 /* Light Theme Styles */
 .home-page.light .title-light {
-    color: black;
-    text-align: center;
-    margin-top: 20px;
+  color: black;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Dark Theme Styles */
 .home-page.dark .title-dark {
-    color: white;
-    text-align: center;
-    margin-top: 20px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.standings-section {
+  max-width: 1200px;
+  margin: 0 auto;
 }

@@ -15,7 +15,7 @@ const PlayerCard = ({ player, theme, onClose }) => {
           onClick={onClose}
           aria-label="Close player card"
         >
-          ✕
+          ×
         </button>
 
         <div className={`player-card ${theme}`}>
@@ -61,9 +61,9 @@ const PlayerCard = ({ player, theme, onClose }) => {
           {/* Stats Grid */}
           <div className="stats-grid">
             <div className={`stat-item ${theme}`}>
-              <div className={`stat-label ${them}`}>Points per Game</div>
-              <div className={`stat-value ${them}`}>
-                {playerStats.pointsPerGame || "N A"}
+              <div className={`stat-label ${theme}`}>Points per Game</div>
+              <div className={`stat-value ${theme}`}>
+                {playerStats.pointsPerGame || "N/A"}
               </div>
             </div>
 
